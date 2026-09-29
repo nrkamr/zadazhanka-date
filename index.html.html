@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#120915">
+<title>Свидание — Задажанка 🐵❤️</title>
+<style>
+:root{--pink:#ff4f91;--pink2:#ff86b5;--dark:#120915}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff;background:#120915}
+body{overflow-x:hidden;background:
+radial-gradient(circle at 20% 10%,rgba(255,79,145,.28),transparent 30%),
+radial-gradient(circle at 85% 80%,rgba(160,74,255,.22),transparent 35%),
+linear-gradient(145deg,#120915,#271027 55%,#100812)}
+.page{min-height:100vh;padding:34px 18px 60px;display:flex;justify-content:center}
+.wrap{width:min(100%,560px);position:relative;z-index:2}
+.hero{text-align:center;padding:18px 4px 28px}
+.badge{display:inline-block;padding:8px 14px;border:1px solid rgba(255,255,255,.18);border-radius:99px;background:rgba(255,255,255,.08);font-size:13px;letter-spacing:.4px}
+h1{font-size:clamp(34px,9vw,58px);line-height:1.02;margin:18px 0 12px;letter-spacing:-2px;text-shadow:0 8px 35px rgba(255,79,145,.35)}
+.subtitle{font-size:18px;color:#f8dbe7;line-height:1.5;margin:0}
+.from{margin-top:18px;color:#ffb7d1;font-weight:600}
+.glass{background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.13);box-shadow:0 20px 60px rgba(0,0,0,.28);backdrop-filter:blur(16px);border-radius:30px;padding:25px 18px}
+.question{text-align:center;font-size:21px;font-weight:700;margin:0 0 18px}
+.choice-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+button{font:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.main-choice{min-height:58px;border-radius:18px;font-weight:800;font-size:18px;color:white;transition:transform .2s,opacity .2s,filter .2s}
+.yes{background:linear-gradient(135deg,#ff3e83,#ff77ad);box-shadow:0 10px 28px rgba(255,62,131,.28)}
+.no{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);color:#f7dce7}
+.main-choice:active{transform:scale(.96)}
+.hidden{display:none!important}
+.section{margin-top:18px}
+.section-title{text-align:center;font-size:24px;margin:8px 0 20px}
+.options{display:grid;gap:14px}
+.date-option{width:100%;display:flex;align-items:center;gap:15px;text-align:left;padding:15px;border-radius:22px;color:white;background:rgba(255,255,255,.075);border:1px solid rgba(255,255,255,.12);transition:.2s}
+.date-option:active{transform:scale(.98);background:rgba(255,79,145,.16)}
+.sticker{width:66px;height:66px;min-width:66px;border-radius:20px;display:grid;place-items:center;font-size:36px;background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.05));box-shadow:inset 0 1px rgba(255,255,255,.18)}
+.date-name{font-weight:800;font-size:17px}.date-hint{font-size:12px;color:#cdb5c1;margin-top:4px}
+.confirm{margin-top:16px;text-align:center;padding:22px;border-radius:24px;background:linear-gradient(145deg,rgba(255,79,145,.18),rgba(255,255,255,.06));border:1px solid rgba(255,132,181,.22)}
+.confirm .big{font-size:34px;font-weight:900;letter-spacing:-1px}.confirm p{color:#f5dce7;line-height:1.5;margin:8px 0 0}
+.selected{margin-top:12px;color:#ffb6d0;font-weight:700}
+.footer{text-align:center;color:#9e8792;font-size:12px;margin-top:20px}
+.heart{position:fixed;pointer-events:none;z-index:10;animation:heartFly 2.5s ease-out forwards;filter:drop-shadow(0 4px 12px rgba(255,80,145,.35))}
+@keyframes heartFly{0%{transform:translate(-50%,-50%) scale(.3) rotate(0);opacity:0}12%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% - 105vh)) scale(1.2) rotate(var(--r));opacity:0}}
+.sparkle{position:fixed;pointer-events:none;z-index:9;animation:spark 1.2s ease-out forwards}
+@keyframes spark{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}20%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1);opacity:0}}
+@media(max-width:380px){.choice-row{grid-template-columns:1fr}.sticker{width:58px;height:58px;min-width:58px;font-size:31px}}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="wrap">
+
+<header class="hero">
+  <div class="badge">💌 ОСОБОЕ ПРИГЛАШЕНИЕ</div>
+  <h1>Задажанка 🐵❤️</h1>
+  <p class="subtitle">У меня к тебе один очень важный вопрос…<br>Пойдёшь со мной на свидание?</p>
+  <div class="from">Приглашает Амир 🫪</div>
+</header>
+
+<section class="glass" id="questionCard">
+  <p class="question">Ну что, какой твой ответ? 🥹</p>
+  <div class="choice-row">
+    <button class="main-choice yes" id="yesBtn" onclick="sayYes()">Да! ❤️</button>
+    <button class="main-choice no" id="noBtn" onclick="sayNo()">Фу, нет 😭</button>
+  </div>
+</section>
+
+<section class="glass section hidden" id="dateSection">
+  <h2 class="section-title">Тогда выбирай наше свидание ✨</h2>
+  <div class="options">
+    <button class="date-option" onclick="selectDate('Романтический ужин для двоих')">
+      <span class="sticker">🥂</span><span><span class="date-name">Романтический ужин для двоих</span><br><span class="date-hint">Вкусный вечер только для нас ❤️</span></span>
+    </button>
+    <button class="date-option" onclick="selectDate('Конная прогулка')">
+      <span class="sticker">🐎</span><span><span class="date-name">Конная прогулка</span><br><span class="date-hint">Немного приключений вдвоём ✨</span></span>
+    </button>
+    <button class="date-option" onclick="selectDate('Прогулка в горах')">
+      <span class="sticker">🏔️</span><span><span class="date-name">Прогулка в горах</span><br><span class="date-hint">Красивые виды и мы вдвоём 🤍</span></span>
+    </button>
+    <button class="date-option" onclick="selectDate('Фотостудия')">
+      <span class="sticker">📸</span><span><span class="date-name">Фотостудия</span><br><span class="date-hint">Оставим красивые воспоминания 📷</span></span>
+    </button>
+  </div>
+  <div class="confirm hidden" id="confirm">
+    <div class="big">10.10.2026</div>
+    <p>Дата нашего свидания уже запланирована.<br><b>И ты должна выглядеть сногсшибательно. ❤️</b></p>
+    <div class="selected" id="selected"></div>
+  </div>
+</section>
+
+<div class="footer">Сделано Амиром специально для Задажанки 🐵❤️</div>
+</div>
+</div>
+
+<script>
+let noClicks=0;
+const noBtn=document.getElementById('noBtn');
+
+function sayNo(){
+  noClicks++;
+  const scale=Math.max(.08,1-noClicks*.18);
+  noBtn.style.transform=`scale(${scale})`;
+  noBtn.style.opacity=Math.max(.05,1-noClicks*.2);
+  noBtn.style.filter=`blur(${Math.max(0,(noClicks-3)*.7)}px)`;
+  if(noClicks>=6){
+    noBtn.classList.add('hidden');
+    document.querySelector('.choice-row').style.gridTemplateColumns='1fr';
+  }
+}
+
+function sayYes(){
+  burstHearts();
+  document.getElementById('dateSection').classList.remove('hidden');
+  setTimeout(()=>document.getElementById('dateSection').scrollIntoView({behavior:'smooth',block:'start'}),180);
+}
+
+function selectDate(name){
+  document.getElementById('confirm').classList.remove('hidden');
+  document.getElementById('selected').textContent='Выбрано: '+name+' ❤️';
+  burstHearts(18);
+}
+
+function burstHearts(count=30){
+  const symbols=['❤️','💗','💕','💖','💘','💝','✨'];
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const e=document.createElement('div');
+      e.className=Math.random()<.72?'heart':'sparkle';
+      e.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+      e.style.left=(8+Math.random()*84)+'vw';
+      e.style.top=(60+Math.random()*30)+'vh';
+      e.style.fontSize=(14+Math.random()*20)+'px';
+      e.style.setProperty('--x',((Math.random()-.5)*45)+'vw');
+      e.style.setProperty('--r',((Math.random()-.5)*80)+'deg');
+      e.style.setProperty('--y',((Math.random()-.5)*35)+'vh');
+      document.body.appendChild(e);
+      setTimeout(()=>e.remove(),2800);
+    },i*45);
+  }
+}
+</script>
+</body>
+</html>
